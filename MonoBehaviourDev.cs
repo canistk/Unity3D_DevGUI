@@ -11,7 +11,7 @@ public class MonoBehaviourDev : MonoBehaviour {
 	[System.NonSerializedAttribute]
 	public bool DevDisplayGUI = false;
 	
-	protected void Start ()
+	public virtual void OnEnable()
 	{
 		if( DevFunctionLabel.Equals("") )
 		{	// If you don't define, I make one for you.
@@ -20,11 +20,12 @@ public class MonoBehaviourDev : MonoBehaviour {
 		if( PlayerPrefs.HasKey("DevManager") )
 		{
 			DevManagerExist = true;
-			DevelopManager.DevManager.Instance.reg(DevFunctionLabel, HandleDebugGUI, DevWindowMoveable);
-			Debug.Log("\""+PlayerPrefs.GetString("DevManager")+"\" detected & registed.");
+			DevelopManager.DevManager.Instance.Reg(DevFunctionLabel, HandleDebugGUI, DevWindowMoveable);
+			Debug.Log("\""+PlayerPrefs.GetString("DevManager")+"\" detected - "+DevFunctionLabel+" registed.");
 		}
 	}
-	protected void OnGUI()
+	public virtual void OnDisable(){}
+	public virtual void OnGUI()
 	{
 		if( !DevManagerExist && DevDisplayGUI )
 		{
@@ -32,11 +33,8 @@ public class MonoBehaviourDev : MonoBehaviour {
 			catch(ArgumentException){}
 		}
 	}
-	/// <summary>
-	/// override this function and do your own GUI over here.
-	/// </summary>
-	virtual public void HandleDebugGUI()
-	{
+	/// <summary>override this function and do your own GUI over here.</summary>
+	public virtual void HandleDebugGUI(){
 		// DevManager will handle the rest.
 	}
 }

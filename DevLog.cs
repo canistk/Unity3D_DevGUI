@@ -73,7 +73,7 @@ namespace DevelopManager
 		private bool mCollapse = false;
 		private List<ConsoleMessage> logHistory = new List<ConsoleMessage>();
 		private List<FilterFunc> logFilter = new List<FilterFunc>();
-		private string mMaxLogLengthStr = "100";
+		public string mMaxLogLengthStr = "100";
 		private float mTotalScrollHeight = 0;
 		private bool mUpdateLog = false;
 		private bool mAutoScroll = true;
@@ -161,11 +161,11 @@ namespace DevelopManager
 			mLineStyle.padding = new RectOffset(20,20,5,5);
 			mLineStyle.margin = new RectOffset(0,0,0,0);
 			mLineStyle.alignment = TextAnchor.UpperLeft;
-			mBlankImg = DevGUI.fillColor(UnityEngine.Color.clear);
-			mWarnImg = DevGUI.fillColor(UnityEngine.Color.yellow);
-			mErrorImg = DevGUI.fillColor(UnityEngine.Color.red);
-			mLightImg = DevGUI.fillColor(new UnityEngine.Color(0.0f,0.0f,0.0f,0.3f));
-			mDarkImg = DevGUI.fillColor(UnityEngine.Color.black);
+			mBlankImg = DevTools.FillColor(UnityEngine.Color.clear);
+			mWarnImg = DevTools.FillColor(UnityEngine.Color.yellow);
+			mErrorImg = DevTools.FillColor(UnityEngine.Color.red);
+			mLightImg = DevTools.FillColor(new UnityEngine.Color(0.0f,0.0f,0.0f,0.3f));
+			mDarkImg = DevTools.FillColor(UnityEngine.Color.black);
 			mDetailStyle.border = new RectOffset(0,0,0,0);
 			mDetailStyle.padding = new RectOffset(50,20,10,10);
 			mDetailStyle.margin = new RectOffset(0,0,0,0);
@@ -304,7 +304,15 @@ namespace DevelopManager
 			}
 			GUILayout.EndScrollView();
 			
-			GUILayout.Label(GUI.tooltip);
+			GUILayout.BeginHorizontal();
+			{
+				GUILayout.Label(GUI.tooltip);
+				if( GUILayout.Button ("Pause", GUILayout.Width(80)) ) Time.timeScale=0f;
+				GUILayout.Space(5);
+				if( GUILayout.Button("Resume", GUILayout.Width(80)) ) Time.timeScale=1f;
+				GUILayout.Space(5);
+			}
+			GUILayout.EndHorizontal();
 			
 			GUILayout.EndVertical();	
 		}
